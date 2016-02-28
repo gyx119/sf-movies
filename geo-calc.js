@@ -24,6 +24,7 @@ allMovies.forEach(function(movie, index) {
 			allMovies[index].lat = data.results[0].geometry.location.lat;
 			allMovies[index].lng = data.results[0].geometry.location.lng;
 
+			// set timeout to avoid exceeding API rate limit
 			setTimeout(function(){
 				callback(null);
 			},160);
@@ -31,6 +32,7 @@ allMovies.forEach(function(movie, index) {
 	});	
 });
 
+//write to file after finishing parsing raw json file
 async.series(asyncCallbacks, function(err, results){
 	fs.writeFile('formatted.json', JSON.stringify(allMovies),  function(err) {
 	   if (err) {

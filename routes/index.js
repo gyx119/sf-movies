@@ -27,12 +27,12 @@ router.get('/api/director', function(req, res) {
   });
 });
 
-router.get('/api/title', function(req, res) {
+router.get('/api/titles', function(req, res) {
   if(!req.query.name) return res.json({});
 
-  if(memoHash[req.query.name]){
-    req.json(memoHash[req.query.name]);
-  }
+  // if(memoHash[req.query.name]){
+  //   req.json(memoHash[req.query.name]);
+  // }
 
   var titleName = (req.query.name) ? req.query.name.toLowerCase() : '';
   var uniqueList = {};
@@ -48,7 +48,7 @@ router.get('/api/title', function(req, res) {
     titles: Object.keys(uniqueList),
     data: filteredMovieArray
   };
-  memoHash[req.query.name] = result;
+  // memoHash[req.query.name] = result;
   res.json(result);
 });
 
