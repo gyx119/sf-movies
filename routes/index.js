@@ -8,6 +8,8 @@ var allMovies = require('../sf-movie.json').data.map(function (movieArray) {
   };
 });
 
+var memoHash = {};
+
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
@@ -35,6 +37,10 @@ router.get('/api/director', function(req, res) {
 router.get('/api/title', function(req, res) {
   if(!req.query.name) return res.json({});
 
+  if(memoHash[req.query.name]){
+    req.json(memoHash[req.query.name]);
+  }
+
   var titleName = (req.query.name) ? req.query.name.toLowerCase() : '';
   var uniqueList = {};
   var filteredMovieArray = allMovies
@@ -45,10 +51,12 @@ router.get('/api/title', function(req, res) {
       }
     });
   
-  res.json({
+  var result = {
     titles: Object.keys(uniqueList),
     data: filteredMovieArray
-  });
+  };
+  memoHash[req.query.name] = result;
+  res.json(result);
 });
 
 module.exports = router;
