@@ -2,12 +2,8 @@ $(document).ready(function(){
 	$('[data-query-param="director_name"]').keyup( function (event) {
 
 		var directoryParam = $('[data-query-param=director_name]').val();
-		var src = "{{#each results}}" + 
-	      		"<div>" +
-	      			"<span>director:{{director}}</span>" +
-	      			"<span>title:{{title}}</span>" +
-	      			"<span>location:{{location}}</span>" +
-	  			"</tr>" +
+		var src = "{{#each directors}}" + 
+	      		"<div>{{this}}</div>" +
 	      	"{{/each}}";
 
 		var resultsTemplate = Handlebars.compile(src);
@@ -20,7 +16,7 @@ $(document).ready(function(){
 			method: 'GET',
 			success: function (jsonResponse) {
 				var tableHtml = resultsTemplate({
-					results: jsonResponse.data
+					directors: jsonResponse.directors
 				});
 				resultsContainer.html(tableHtml)
 			},
