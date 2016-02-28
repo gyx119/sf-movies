@@ -15,7 +15,7 @@ router.get('/api/director', function(req, res) {
   var uniqueList = {};
   var filteredMovieArray = allMovies
     .filter(function (movieObj) {
-      if(movieObj.director.indexOf(directorParam) === 0){
+      if(movieObj.director.indexOf(directorParam) === 0 && Object.keys(uniqueList).length <=10) {
         uniqueList[movieObj.director] = true; 
         return true;
       }
@@ -38,7 +38,7 @@ router.get('/api/titles', function(req, res) {
   var uniqueList = {};
   var filteredMovieArray = allMovies
     .filter(function (movieObj) {
-      if (movieObj.title.indexOf(titleName) === 0){
+      if (movieObj.title.indexOf(titleName) === 0 && Object.keys(uniqueList).length <=10){
         uniqueList[movieObj.title] = true;
         return true;
       }

@@ -5,16 +5,19 @@ $(document).ready(function(){
 	var searchByMovie = true;
 
 	var resultsContainer = $('[data-container=results]');
-	
-	$('[data-query-param="director_name"]').hide();
+
+	var directorParam = $('[data-query-param="director_name"]');
+
+	var titleParam = $('[data-query-param="title_name"]');
+
+	directorParam.hide();
 
 
-	//event trigger for search by director name and call director api
-	$('[data-query-param="director_name"]').keyup( function (event) {
+	//event trigger for search by director name and call directors public api
+	directorParam.keyup( function (event) {
 
-		var directoryParam = $('[data-query-param=director_name]').val();
 		var src = "{{#each directors}}" + 
-	      		  "<li><a href='#''>{{this}}</a></li>" +
+	      		  "<li><a class = 'text-capitalize' href='#''>{{this}}</a></li>" +
 	      		  "{{/each}}";
 
 
@@ -22,7 +25,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: '/api/director',
 			data: {
-				name: directoryParam
+				name: directorParam.val()
 			},
 			method: 'GET',
 			success: function (jsonResponse) {
@@ -36,7 +39,7 @@ $(document).ready(function(){
 				});
 				markers = [];
 				
-				if(jsonResponse.data){
+				if(jsonResponse.data && jsonResponse.data.length > 0){
 					jsonResponse.data.forEach(function (result){
 						var marker = new google.maps.Marker({
 						    position: {
@@ -48,6 +51,8 @@ $(document).ready(function(){
 						});
 						markers.push(marker);
 					});	
+				} else {
+					resultsContainer.hide();
 				}
 			},
 			error: function (err) {
@@ -56,19 +61,18 @@ $(document).ready(function(){
 		});
 	});	
 
-	//event trigger for search by title and call titles api
-	$('[data-query-param="title_name"]').keyup( function (event) {
+	//event trigger for search by title and call titles public api
+	titleParam.keyup( function (event) {
 
-		var titleParam = $('[data-query-param=title_name]').val();
 		var src = "{{#each titles}}" + 
-	      		  "<li><a href='#''>{{this}}</a></li>" +
+	      		  "<li><a class = 'text-capitalize' href='#''>{{this}}</a></li>" +
 	      		  "{{/each}}";
 
 		var resultsTemplate = Handlebars.compile(src);
 		$.ajax({
 			url: '/api/titles',
 			data: {
-				name: titleParam
+				name: titleParam.val()
 			},
 			method: 'GET',
 			success: function (jsonResponse) {
@@ -83,7 +87,7 @@ $(document).ready(function(){
 				});
 				markers = [];
 				
-				if(jsonResponse.data){
+				if(jsonResponse.data && jsonResponse.data.length > 0) {
 					jsonResponse.data.forEach(function (result){
 						var marker = new google.maps.Marker({
 						    position: {
@@ -95,6 +99,8 @@ $(document).ready(function(){
 						});
 						markers.push(marker);
 					});	
+				} else {
+					resultsContainer.hide();
 				}
 			},
 			error: function (err) {
@@ -103,10 +109,14 @@ $(document).ready(function(){
 		});
 	});	
 
-	//Auto complete
+	//Display selected auto compalete pins
 	resultsContainer.on('click', 'li', function (event) {
 		var title = $(event.target).text();
-		$('[data-query-param="director_name"]').val(title);
+		if (searchByMovie) {
+			titleParam.val(title);
+		} else {
+			directorParam.val(title);
+		}
 		markers.forEach(function (marker) {
 			if (marker.title !== title) {
 				marker.setMap(null);
@@ -117,17 +127,17 @@ $(document).ready(function(){
 
 	//switch between search by movie / director
 	$("[data-contiainer='search-type']").on('click', 'li', function (event) {
-		searchByMovie = $('[aria-expanded="true"]').text() ==="Movie";
-		if (event.target.text == "Director" && searchByMovie) {
-			$('[data-query-param=title_name]').empty();
-			$('[data-query-param="title_name"]').hide();
-			$('[data-query-param="director_name"]').show();
-			resultsContainer.empty()
-		} else if (event.target.text == "Movie" && !searchByMovie) {
-			$('[data-query-param=director_name]').empty();
-			$('[data-query-param="director_name"]').hide();
-			$('[data-query-param="title_name"]').show();
-			resultsContainer.empty()
+		searchByMovie = event.target.text == "Movie"
+		if (!searchByMovie && $('[aria-expanded="true"]').text() ==="Movie") {
+			titleParam.val('');
+			titleParam.hide();
+			directorParam.show();
+			resultsContainer.hide();
+		} else if (searchByMovie  && $('[aria-expanded="true"]').text() !=="Movie") {
+			directorParam.val('');
+			directorParam.hide();
+			titleParam.show();
+			resultsContainer.hide();
 		}
 	}); 
 });
