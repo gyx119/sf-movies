@@ -1,13 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var allMovies = require('../sf-movie.json').data.map(function (movieArray) {
-  return {
-    director: movieArray[14].toLowerCase(),
-    title: movieArray[8].toLowerCase(),
-    location: movieArray[10] && movieArray[10].toLowerCase()
-  };
-});
-
+var allMovies = require('../formatted.json');
 var memoHash = {};
 
 router.get('/', function(req, res, next) {
