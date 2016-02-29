@@ -17,12 +17,12 @@ a {
 }
 
 
-.search_controls {
+.toggle_switch {
 	position: absolute;
 	z-index: 10;
 	width: 100%;
 	text-align: center;
-	margin-top: 45px;
+	margin-top:90px;
 }
 
 .nav-pills {
@@ -47,20 +47,22 @@ a {
 .input {
 	position: absolute;
 	z-index: 10;
-	width: 24%;
-	margin-left: 38%;
-	margin-right: 38%;
+	width: 44%;
+	margin-left: 28%;
+	margin-right: 28%;
 	text-align: center;
-	margin-top: 140px;
+	margin-top: 135px;
 }
 
 .result {
 	position: absolute;
 	z-index: 10;
-	width: 24%;
-	margin-left: 39.2%;
-	margin-right: 36.8%;
+	width: 44%;
+	margin-left: 29.5%;
+	margin-right: 25.5%;
 	text-align: center;
-	margin-top: 170px;
+	margin-top: 165px;
 }
+
+
 

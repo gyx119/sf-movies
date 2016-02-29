@@ -5,28 +5,23 @@
 
   <div class = "title">
     <h2> SF Movie Locator </h2>
-    <p> Search your favorite director or movie and see where they were filmed in SF!</p>
+    <p> See where your favorite movies were filmed in SF!</p>
   </div>
 
 
-<div class="search_controls">
-  <div class="ui-widget search_controls">
-    <div class="container">
-      <ul class="nav nav-pills" data-contiainer="search-type">
-        <li class="nav active" value="title"><a href="#" data-toggle="tab" aria-expanded="true">Movie</a></li>
-        <li class="nav" value="director"><a href="#" data-toggle="tab" aria-expanded="false">Director</a></li>
-      </ul>
-    </div>
+  <div class="toggle_switch">
+    <ul class="nav nav-pills" data-contiainer="search-type">
+      <li class="nav active" value="title"><a href="#" data-toggle="tab" aria-expanded="true">Movie</a></li>
+      <li class="nav" value="director"><a href="#" data-toggle="tab" aria-expanded="false">Director</a></li>
+    </ul>
   </div>
-</div>
-
 
   <div class='input col-xs-3' >
     <input class = "form-control" type="text" placeholder= "search by director" data-query-param="director_name">
   </div>
 
   <div class='input col-xs-3'>
-    <input class = "form-control" type="text" placeholder= "search by movie name" data-query-param="title_name">
+    <input class = "form-control" type="text" placeholder= "search by movie" data-query-param="title_name">
   </div>
 
   <div class="col-xs-3 result">

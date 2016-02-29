@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	// google map markers
+	// list of google map markers
 	var markers = [];
 
 	var searchByMovie = true;
@@ -10,16 +10,49 @@ $(document).ready(function(){
 
 	var titleParam = $('[data-query-param="title_name"]');
 
-	directorParam.hide();
+	directorParam.hide(); // hide search director input field initially
 
+	// generate info window template
+	function createInfoWindowContent(director, title, location) {
+		var contentString = 
+			'<div class = "text-capitalize">'+ "Movie Name: " + title + '</div>' + 
+			'<div class = "text-capitalize">'+ "Director: " + director + '</div>' + 
+			'<div class = "text-capitalize">'+ "Location: " + location + '</div>';
+		return contentString;
+	}
+
+	// add markers and info windows in the map
+	function addMarker(result, option) {
+		var infowindow = new google.maps.InfoWindow({
+		   content: createInfoWindowContent(result.director, 
+		   		result.title, result.location),
+		   minWidth: 50,
+		   maxWidth: 200
+		 });
+
+		var marker = new google.maps.Marker({
+		    position: {
+		    	lat: result.lat,
+		    	lng: result.lng
+		    },
+		    map: map,
+		    title: option === "director" ? result.director : result.title
+		});
+
+		markers.push(marker);
+
+		marker.addListener('click', function() {
+		   infowindow.open(map, marker);
+		 });
+
+	}
 
 	//event trigger for search by director name and call directors public api
-	directorParam.keyup( function (event) {
+	directorParam.keyup(function(event) {
 
 		var src = "{{#each directors}}" + 
 	      		  "<li><a class = 'text-capitalize' href='#''>{{this}}</a></li>" +
 	      		  "{{/each}}";
-
 
 		var resultsTemplate = Handlebars.compile(src);
 		$.ajax({
@@ -38,54 +71,23 @@ $(document).ready(function(){
 					marker.setMap(null);
 				});
 				markers = [];
-				center = {lat: 37.75, lng: -122.43};
 
 				if(jsonResponse.data && jsonResponse.data.length > 0){
 					jsonResponse.data.forEach(function (result){
-
-						var map = new google.maps.Map(document.getElementById('map'), {
-						  zoom: 12,
-						  center: center
-						});
-
-
-						var contentString = '<div id="content">'+
-						     + "{{result.director}}"
-						     + '</div>';
-
-						var infowindow = new google.maps.InfoWindow({
-						   content: contentString,
-						   minWidth: 200
-						 });
-
-						var marker = new google.maps.Marker({
-						    position: {
-						    	lat: result.lat,
-						    	lng: result.lng
-						    },
-						    map: map,
-						    title: result.director
-						});
-
-						markers.push(marker);
-
-						marker.addListener('click', function() {
-						   infowindow.open(map, marker);
-						 });
-
+						addMarker(result, "director");
 					});	
 				} else {
 					resultsContainer.hide();
 				}
 			},
 			error: function (err) {
-
+				//TODO
 			}
 		});
 	});	
 
 	//event trigger for search by title and call titles public api
-	titleParam.keyup( function (event) {
+	titleParam.keyup(function(event) {
 
 		var src = "{{#each titles}}" + 
 	      		  "<li><a class = 'text-capitalize' href='#''>{{this}}</a></li>" +
@@ -112,22 +114,14 @@ $(document).ready(function(){
 				
 				if(jsonResponse.data && jsonResponse.data.length > 0) {
 					jsonResponse.data.forEach(function (result){
-						var marker = new google.maps.Marker({
-						    position: {
-						    	lat: result.lat,
-						    	lng: result.lng
-						    },
-						    map: map,
-						    title: result.title
-						});
-						markers.push(marker);
+						addMarker(result, "title");
 					});	
 				} else {
 					resultsContainer.hide();
 				}
 			},
 			error: function (err) {
-
+				//TODO
 			}
 		});
 	});	
@@ -165,8 +159,8 @@ $(document).ready(function(){
 			titleParam.show();
 			resultsContainer.hide();
 			markers.forEach(function (marker) {
-					marker.setMap(null);
-				});
+				marker.setMap(null);
+			});
 		}
 	}); 
 });
