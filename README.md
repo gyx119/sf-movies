@@ -14,6 +14,7 @@ $ npm start
 ## Summary:
  * SF Movie is a single-page web application that allows users to search if movies are made in SF 
  and where they were made at, by director name or movie name
+ * Check out the app live: [SF Movie Locator]
  
 ## Technology Stack:
 
@@ -53,3 +54,4 @@ Given the decision of storing dataset in memory, I implement autocomplete using 
 * It would be cool if we can request an Uber on the application and actually take us to the location where the movie was made
 * Also would be nice if we can see more information about the movie, when we click the marker on the map, such as a link to imdb
 
+   [SF Movie Locator]: <https://sf-movie-locator.herokuapp.com>
