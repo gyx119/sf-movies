@@ -48,7 +48,7 @@ Given the decision of storing dataset in memory, I implement autocomplete using 
 
 ## Next Step (Things to improve on):
 #### Testing
-* Given the time constraints, i was not able to write tests. If given more time, I want to explore the Javascript testing framework -- Mocha, and also potentially write some automation testing script for front-end
+* I have explored Mocha and supertest for unit test and have written tests for the public API (search director & movie name). Given the time constraints, I was not able to do some front-end test as well as automation end-to-end test. 
 
 #### Database
 * Build a database (MySQL) that supports fast searching through indexing. Right now it takes O(n) (using prefix matching) (would make sense if the data set gets bigger or if we want to extend this projects to other cities as well)
