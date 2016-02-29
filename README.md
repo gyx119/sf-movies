@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-$ npm install express
+$ npm install
 ```
 ## Run (localhost:3000)
 
@@ -23,12 +23,17 @@ $ npm start
 #### Node/Express/Heroku (Little Experience)
 I used a Node.js web application server framework, Express.js as the backend. Given the time constraint and estimated complexity of this project, I chose a relatively fast-to-learn framework and light-weight framework. I also have heard express is the most popular Node.js based framework and has a lot of features and supports available.
 
-For database, I did not actually used a database. Given that the dataset is relatively small, I used a javascript script to parse the data and precomputed the (longitutde, latitude) of each location using Google Geocoder node module. I stored these data in the memory so that it provides fast read speed.
+For database, I did not actually used a database. Given that the dataset is relatively small, I used a javascript script to parse the data and precomputed the (longitutde, latitude) of each location using [Google Geocoder node module](https://www.npmjs.com/package/geocoder). I stored these data in the memory so that it provides fast read speed. 
+
+sf-movie.json is the original json file downloaded from [DataSF](http://www.datasf.org/): [Film
+Locations](https://data.sfgov.org/Arts-Culture-and-Recreation-/Film-Locations-in-San-Francisco/yitu-d5am) and [geo-calc.js](https://github.com/gyx119/sf-movies/blob/master/geo-calc.js) is where the cleaning and getting (longitutde, latitude) and finally [formatted.json](https://github.com/gyx119/sf-movies/blob/master/formatted.json) is the final data.
 
 The application was deployed onto Heroku. Heroku has very smooth integration with express and deploy literally takes only a few seconds!
 
 #### HandleBars, Bootstrap, JQuery (Medium Experience)
 I used handleBars as the templating engine because i have been working with it before i like its powerfuly functionality and big supporting community. For styling, Bootstrap provides a lot UI elements, such as the dropdown, toggle and input field i have used. Finally, JQuery comes handy when i need to do some DOM manipulation, such as removing markers, switch between searchs, hide elements, etc.
+
+[sf_movies.js](https://github.com/gyx119/sf-movies/blob/master/public/javascripts/sf_movie.js) is the customized javascript file to define different user interation on the main page. [index.hbs](https://github.com/gyx119/sf-movies/blob/master/views/index.hbs) is the main page for the application. [index.js](https://github.com/gyx119/sf-movies/blob/master/routes/index.js) contains two public api, one for search director name and one for search movie name.
 
 ## Challenges:
 #### Learning Curve
@@ -48,6 +53,7 @@ Given the decision of storing dataset in memory, I implement autocomplete using 
 #### Database
 * Build a database (MySQL) that supports fast searching through indexing. Right now it takes O(n) (using prefix matching) (would make sense if the data set gets bigger or if we want to extend this projects to other cities as well)
 * The current solution does not automatically update the data. Given the data does not change frequently, in the future we could have it fetch from the source once a day
+* I also noticed when manual testing, some location is null and some data cleaning would be ideal
 * It would also improve performance if we leverage Redis to cache the search result in memory
 
 #### Core Functionality
