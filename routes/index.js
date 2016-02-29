@@ -49,7 +49,10 @@ router.get('/api/titles', function(req, res) {
     data: filteredMovieArray
   };
   // memoHash[req.query.name] = result;
+  // res.header('Content-Type': 'application/json');
+  // res.status(200);
   res.json(result);
+  console.log(res.headersSent);
 });
 
 module.exports = router;
