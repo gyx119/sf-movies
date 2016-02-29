@@ -7,9 +7,60 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
 #map {
-height: 100%;
+	height: 100%;
+	position: relative; 
 }
 a {
   color: #00B7FF;
 }
+
+
+.search_controls {
+	position: absolute;
+	z-index: 10;
+	width: 100%;
+	text-align: center;
+	margin-top: 45px;
+}
+
+.nav-pills {
+	display: flex;
+	justify-content: center;
+	font-size: 10px;
+	margin-bottom: 3px;
+}
+
+.nav>li>a {
+	padding: 10px 15px;
+}
+
+.title {
+	position: absolute;
+	z-index: 10;
+	width: 100%;
+	text-align: center;
+	margin-top: 0px;
+}
+
+.input {
+	position: absolute;
+	z-index: 10;
+	width: 24%;
+	margin-left: 38%;
+	margin-right: 38%;
+	text-align: center;
+	margin-top: 140px;
+}
+
+.result {
+	position: absolute;
+	z-index: 10;
+	width: 24%;
+	margin-left: 39.2%;
+	margin-right: 36.8%;
+	text-align: center;
+	margin-top: 170px;
+}
+

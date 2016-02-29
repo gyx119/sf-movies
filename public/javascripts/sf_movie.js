@@ -38,9 +38,26 @@ $(document).ready(function(){
 					marker.setMap(null);
 				});
 				markers = [];
-				
+				center = {lat: 37.75, lng: -122.43};
+
 				if(jsonResponse.data && jsonResponse.data.length > 0){
 					jsonResponse.data.forEach(function (result){
+
+						var map = new google.maps.Map(document.getElementById('map'), {
+						  zoom: 12,
+						  center: center
+						});
+
+
+						var contentString = '<div id="content">'+
+						     + "{{result.director}}"
+						     + '</div>';
+
+						var infowindow = new google.maps.InfoWindow({
+						   content: contentString,
+						   minWidth: 200
+						 });
+
 						var marker = new google.maps.Marker({
 						    position: {
 						    	lat: result.lat,
@@ -49,7 +66,13 @@ $(document).ready(function(){
 						    map: map,
 						    title: result.director
 						});
+
 						markers.push(marker);
+
+						marker.addListener('click', function() {
+						   infowindow.open(map, marker);
+						 });
+
 					});	
 				} else {
 					resultsContainer.hide();
@@ -133,11 +156,17 @@ $(document).ready(function(){
 			titleParam.hide();
 			directorParam.show();
 			resultsContainer.hide();
+			markers.forEach(function (marker) {
+					marker.setMap(null);
+				});
 		} else if (searchByMovie  && $('[aria-expanded="true"]').text() !=="Movie") {
 			directorParam.val('');
 			directorParam.hide();
 			titleParam.show();
 			resultsContainer.hide();
+			markers.forEach(function (marker) {
+					marker.setMap(null);
+				});
 		}
 	}); 
 });
