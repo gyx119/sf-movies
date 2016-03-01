@@ -35,6 +35,9 @@ I used handleBars as the templating engine because i have been working with it b
 
 [sf_movies.js](https://github.com/gyx119/sf-movies/blob/master/public/javascripts/sf_movie.js) is the customized javascript file to define different user interation on the main page. [index.hbs](https://github.com/gyx119/sf-movies/blob/master/views/index.hbs) is the main page for the application. [index.js](https://github.com/gyx119/sf-movies/blob/master/routes/index.js) contains two public api, one for search director name and one for search movie name.
 
+####Testing (No Experience)
+I used [mocha](https://mochajs.org/) and [supertest](https://www.npmjs.com/package/supertest) to unit-test the public API (search by director & movie name).
+
 ## Challenges:
 #### Learning Curve
  To learn different technology stacks in a short amount of time and getting support
